@@ -18,9 +18,11 @@ import {
   saveStoreSettings 
 } from './services/db';
 
+const ADMIN_SECURE_TOKEN = '5c10a2af96cf45ee5e994a408c48a744a73d3290f4b4258adb4386849cee52df';
+
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return sessionStorage.getItem('neefsane_admin_auth') === 'true';
+    return sessionStorage.getItem('neefsane_admin_session_token') === ADMIN_SECURE_TOKEN;
   });
 
   const [products, setProducts] = useState(() => {
@@ -202,6 +204,7 @@ export default function App() {
     return (
       <AdminLoginPage
         onSuccess={() => {
+          sessionStorage.setItem('neefsane_admin_session_token', ADMIN_SECURE_TOKEN);
           sessionStorage.setItem('neefsane_admin_auth', 'true');
           setIsAuthenticated(true);
           showToast('Yönetici paneline giriş yapıldı.');
